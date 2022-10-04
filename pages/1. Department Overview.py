@@ -49,11 +49,6 @@ option = st.selectbox(
     ('Human Resources', 'Research & Development', 'Sales'))
 
 st.write('You selected:', option)
-
-AttritionFalse['AgeGroups'] = pd.cut(AttritionFalse['Age'], bins=[18, 25, 30, 40, 50, 60, 70, np.inf], include_lowest=True)
-AttritionFalse['IncomeGroups'] = pd.cut(AttritionFalse['MonthlyIncome'], bins=[10000, 25000, 50000, 75000, 100000, 125000, 150000, 175000, 200000, np.inf])
-AttritionFalse['YearsAtCompanyGroups'] = pd.cut(AttritionFalse['YearsAtCompany'], bins=[-1, 2, 5, 10, 15, 20, 30, 40, np.inf])
-
 filtered_df = AttritionFalse[AttritionFalse['Department'] == option]
 
 #Education Plot
@@ -63,16 +58,19 @@ st.bar_chart(education_chart)
 
 #Age Plot
 
+filtered_df['AgeGroups'] = pd.cut(filtered_df['Age'], bins=[18, 25, 30, 40, 50, 60, 70, np.inf], include_lowest=True)
 Age_chart = pd.crosstab(filtered_df.AgeGroups, filtered_df.AgeGroups.count())
 st.bar_chart(Age_chart)
 
 #Income Plot
 
+filtered_df['IncomeGroups'] = pd.cut(filtered_df['MonthlyIncome'], bins=[10000, 25000, 50000, 75000, 100000, 125000, 150000, 175000, 200000, np.inf])
 Income_chart = pd.crosstab(filtered_df.IncomeGroups, filtered_df.IncomeGroups.count())
 st.bar_chart(Income_chart)
 
 #Years At Company Plot
 
+filtered_df['YearsAtCompanyGroups'] = pd.cut(filtered_df['YearsAtCompany'], bins=[-1, 2, 5, 10, 15, 20, 30, 40, np.inf])
 YearsWorked_chart = pd.crosstab(filtered_df.YearsAtCompanyGroups, filtered_df.YearsAtCompanyGroups.count())
 st.bar_chart(YearsWorked_chart)
 
